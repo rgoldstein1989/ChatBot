@@ -195,7 +195,7 @@ def index():
     if session.get('logged_in'):
         return render_template('home.html')
     else:
-        return render_template('index.html', message="Hello, Welcome to ITsavvy Autochat Bot!")
+        return render_template('home.html', message="Hello, Welcome to ITsavvy Autochat Bot!")
 
 
 @app.route('/register/', methods=['GET', 'POST'])

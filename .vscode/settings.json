@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/2aa2af5f-114c-4ab5-b8f4-edc9af5a44fc/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/cloudmorebot",
+    "appService.deploySubpath": "."
+}
