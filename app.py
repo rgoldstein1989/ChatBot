@@ -8,7 +8,6 @@ from langchain.agents import create_csv_agent
 import pandas as pd
 from flask import Flask, url_for, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
-import joblib
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -98,7 +97,7 @@ def get_user_input():
 
 def is_related_to_dataset(user_input):
     # Define a list of keywords related to the dataset.csv contents
-    keywords = ['billing date','service name','organization name','customer number','product id','product name','item code','quantity','unit cost price','unit sales price','total cost','total sales','margin amount','margin percentage','currency code','payment frequency','purchase order number','subscription id','subscription name','billing line details'',organization currency code','organization groups','opportunity number']
+    keywords = ['billing date','customers', 'customer', 'subscriptions', 'pay', 'subscription', 'license', 'client', 'service name','organization name','customer number','product id','product name','item code','quantity','unit cost price','unit sales price','total cost','total sales','margin amount','margin percentage','currency code','payment frequency','purchase order number','subscription id','subscription name','billing line details'',organization currency code','organization groups','opportunity number']
 
     # Check if any of the keywords are present in the user_input
     for keyword in keywords:
@@ -195,7 +194,7 @@ def index():
     if session.get('logged_in'):
         return render_template('home.html')
     else:
-        return render_template('home.html', message="Hello, Welcome to ITsavvy Autochat Bot!")
+        return render_template('index.html', message="Hello, Welcome to ITsavvy Autochat Bot!")
 
 
 @app.route('/register/', methods=['GET', 'POST'])
@@ -241,6 +240,10 @@ def get_data():
     user_input = str(text)
     # print(user_input)
     try:
+        if "licenses" in user_input:
+            user_input = user_input.replace('licenses','subscriptions')
+        if "licences" in user_input:
+            user_input = user_input.replace('licences','subscriptions')
         response = generate_response(user_input, messages = [])
         # response = str(response)
         response = print_conversation(response)
